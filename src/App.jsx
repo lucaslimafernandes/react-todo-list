@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -6,7 +6,14 @@ import './App.css'
 function App() {
 
   const [item, setItem] = useState("")
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState(() => {
+    const saved = localStorage.getItem("meus-todos")
+    return saved ? JSON.parse(saved) : []
+  })
+
+  useEffect(() => {
+    localStorage.setItem("meus-todos", JSON.stringify(todos))
+  }, [todos])
 
   function addBtn() {
     if (item.trim() == "") { return }

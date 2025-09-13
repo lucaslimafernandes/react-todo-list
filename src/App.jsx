@@ -9,12 +9,25 @@ function App() {
   const [todos, setTodos] = useState([])
 
   function addBtn() {
-    console.log(item)
     if (item.trim() == "") { return }
 
     setTodos([...todos, { text: item, done: false}])
     setItem("")
 
+  }
+
+  function changeStatus(index) {
+
+    setTodos(
+      todos.map((todo, i) =>
+      i === index ? { ...todo, done: !todo.done } : todo
+      )
+    )
+
+  }
+
+  function deleteItem(index) {
+    setTodos(todos.filter((_, i) => i !== index))
   }
 
 
@@ -37,10 +50,10 @@ function App() {
               <th><input type="button" value="adicionar" name='adicionar' onClick={addBtn}/></th>
             </tr>
             { todos.map((todo, index) => (
-              <tr>
+              <tr key={index}>
                 <td>{ todo.text }</td>
-                <td><input type="checkbox" name="done" id="" checked={ todo.done } /> </td>
-                <td><input type="button" value="excluir" /></td>
+                <td><input type="checkbox" name="done" id="" checked={ todo.done } onChange={() => changeStatus(index)}/> </td>
+                <td><input type="button" value="excluir" onClick={() => deleteItem(index)}/></td>
               </tr>
             ))}
           </tbody>

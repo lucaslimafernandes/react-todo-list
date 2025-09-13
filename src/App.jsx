@@ -37,6 +37,11 @@ function App() {
     setTodos(todos.filter((_, i) => i !== index))
   }
 
+  function clearStorage() {
+    localStorage.removeItem("meus-todos")
+    setTodos([])
+  }
+
 
   return (
     <div>
@@ -65,6 +70,9 @@ function App() {
             ))}
           </tbody>
         </table>
+      </div>
+      <div>
+        <input type="button" value="clear all" onClick={() => clearStorage()}/>
       </div>
     </div>
 

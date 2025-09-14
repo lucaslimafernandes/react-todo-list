@@ -1,0 +1,6 @@
+fastapi
+pydantic
+sqlmodel
+uvicorn[standard]
+psycopg2-binary
+python-dotenv

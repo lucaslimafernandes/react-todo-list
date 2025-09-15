@@ -2,28 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
 
-const API = "http://localhost:8000";
-
-async function fetchList(id) {
-    const res = await fetch(`${API}/lists/${id}`)
-
-    if (!res.ok) throw new Error("falha ao carregar lista");
-    return res.json()
-
-}
-
-async function createItem(listId, text) {
-
-    const res = await fetch(`${API}/lists/${listId}/items`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ text })
-    })
-
-    if (!res.ok) throw new Error("falha ao criar item")
-    return res.json()
-}
-
 
 export default function ListPage() {
 
@@ -49,24 +27,14 @@ export default function ListPage() {
         return saved ? JSON.parse(saved) : []
     })
 
-    // useEffect(() => {
-    //     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-    // }, [todos, STORAGE_KEY])
     useEffect(() => {
-        fetchList(id).then(data => setTodos(data.items))
-    })
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+    }, [todos, STORAGE_KEY])
 
-    // function addBtn() {
-    //     if (item.trim() === "") return;
-    //     setTodos([...todos, { text: item, done: false }]);
-    //     setItem("");
-    // }
-
-    async function addBtn() {
-        if (!item.trim()) return;
-        const newItem = await createItem(id, item)
-        setTodos(prev => [newItem, ...prev])
-        setItem("")
+    function addBtn() {
+        if (item.trim() === "") return;
+        setTodos([...todos, { text: item, done: false }]);
+        setItem("");
     }
 
     function changeStatus(index) {

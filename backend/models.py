@@ -36,7 +36,7 @@ def get_session():
 
 
 def ensure_list(session: Session, list_id: str) -> List:
-    lst = session.get(List, list_id)
+    lst = session.get(ListModel, list_id)
 
     if not lst:
         lst = ListModel(id=list_id)
